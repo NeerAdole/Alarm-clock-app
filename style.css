@@ -9,22 +9,42 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background: radial-gradient(circle, #e0c3fc, #8ec5fc);
+    background: radial-gradient(circle, #fbc2eb, #a6c1ee);
     color: #444;
+    overflow: hidden;
 }
 
+/* Animated Background */
+@keyframes backgroundAnimation {
+    0% {
+        background: radial-gradient(circle, #fbc2eb, #a6c1ee);
+    }
+    50% {
+        background: radial-gradient(circle, #a6c1ee, #fbc2eb);
+    }
+    100% {
+        background: radial-gradient(circle, #fbc2eb, #a6c1ee);
+    }
+}
+
+body {
+    animation: backgroundAnimation 20s infinite;
+}
+
+/* Container */
 .container {
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
     padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     width: 350px;
     text-align: center;
     position: relative;
     overflow: hidden;
+    z-index: 1;
 }
 
-/* Background Circles */
+/* Decorative Overlays */
 .container::before, .container::after {
     content: '';
     position: absolute;
@@ -32,38 +52,41 @@ body {
     background: rgba(255, 255, 255, 0.2);
     pointer-events: none;
     z-index: 0;
+    filter: blur(70px);
 }
 
 .container::before {
-    width: 300px;
-    height: 300px;
-    top: -150px;
-    left: -150px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 70%);
+    width: 400px;
+    height: 400px;
+    top: -200px;
+    left: -200px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 70%);
 }
 
 .container::after {
-    width: 250px;
-    height: 250px;
-    bottom: -125px;
-    right: -125px;
+    width: 300px;
+    height: 300px;
+    bottom: -150px;
+    right: -150px;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 70%);
 }
 
 /* Header and Time */
 h1 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: #333;
     margin-bottom: 10px;
     z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #current-time {
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: 600;
     margin-bottom: 30px;
     color: #333;
     z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Alarm Setting */
@@ -75,16 +98,17 @@ input[type="time"], select {
     width: calc(100% - 20px);
     padding: 12px;
     margin: 10px 0;
-    border-radius: 8px;
+    border-radius: 12px;
     border: 2px solid #ddd;
     font-size: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 input[type="time"]:focus, select:focus {
     border-color: #a6c1ee;
     outline: none;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Buttons */
@@ -92,18 +116,38 @@ input[type="time"]:focus, select:focus {
     margin-top: 15px;
     padding: 12px 25px;
     border: none;
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: linear-gradient(135deg, #ff6b6b, #f093fb);
     color: white;
-    border-radius: 25px;
+    border-radius: 30px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 1rem;
-    transition: background 0.3s, transform 0.2s;
+    font-size: 1.1rem;
+    transition: background 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+#set-alarm-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 70%);
+    transition: transform 0.5s;
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+#set-alarm-btn:hover::before {
+    transform: translate(-50%, -50%) scale(1);
 }
 
 #set-alarm-btn:hover {
-    background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
-    transform: scale(1.05);
+    background: linear-gradient(135deg, #f093fb, #ff6b6b);
+    transform: scale(1.1);
 }
 
 /* Alarm List */
@@ -120,31 +164,45 @@ input[type="time"]:focus, select:focus {
     margin: 10px 0;
     padding: 15px 20px;
     border-radius: 15px;
-    background: linear-gradient(135deg, #ffb3e6 0%, #ffcccb 100%);
-    color: #333;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ff9a8b, #ff6a88);
+    color: #fff;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
     position: relative;
+    overflow: hidden;
     z-index: 1;
 }
 
-/* Button in Alarm Item */
+.alarm-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    filter: blur(10px);
+    z-index: -1;
+}
+
 .alarm-item button {
     padding: 8px 20px;
     border-radius: 20px;
     font-size: 0.9rem;
     transition: background 0.3s, transform 0.2s;
+    position: relative;
+    z-index: 1;
 }
 
 .alarm-item button.on {
-    background: linear-gradient(135deg, #7ed56f 0%, #28b487 100%);
+    background: linear-gradient(135deg, #7ed56f, #28b487);
     color: white;
 }
 
 .alarm-item button.off {
-    background: linear-gradient(135deg, #ff6b6b 0%, #d63031 100%);
+    background: linear-gradient(135deg, #ff6b6b, #d63031);
     color: white;
 }
 
 .alarm-item button:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
